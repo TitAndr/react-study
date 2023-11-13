@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import { createContext, useEffect, useReducer } from "react";
-import AppReducer from "./AppREducer";
+import AppReducer from "./AppReducer";
 import {
   CHANGE_LANGUAGE,
   createAction,
