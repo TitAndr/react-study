@@ -6,7 +6,7 @@ import BasePopup from "./BasePopup";
 import Validation from "../../utils/validation";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../CustomInput";
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 const useResetPopup = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -44,7 +44,7 @@ const useResetPopup = () => {
       return isLogIn ? (
         t("popup.CreatePassword")
       ) : (
-        <span>{ReactHtmlParser(t("popup.SendLintReset"))}</span>
+        <span>{parse(t("popup.SendLintReset"))}</span>
       );
     };
 

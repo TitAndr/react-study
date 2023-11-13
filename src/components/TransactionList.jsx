@@ -23,7 +23,7 @@ import helper from "../utils/helper";
 import DatePicker from "./DatePicker";
 import { GlobalContext } from "../context/GlobalState";
 import { useTranslation } from "react-i18next";
-import ReactHtmlParser from "react-html-parser";
+import parse from "html-react-parser";
 
 const typeColorMap = {
   income: "success",
@@ -325,9 +325,7 @@ const TransactionList = ({ transactions }) => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
         <span className="hidden font-semibold max-w-[100px] mobile:max-w-none mobile:block">
-          {ReactHtmlParser(
-            t("transaction.Total", { total: transactions.length })
-          )}
+          {parse(t("transaction.Total", { total: transactions.length }))}
         </span>
         <Pagination
           isCompact
