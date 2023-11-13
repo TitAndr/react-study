@@ -48,9 +48,7 @@ const usePaymentPopup = () => {
         );
 
         const purposeAmount =
-          type === "income"
-            ? existPurpose.current_amount + Number(selectedTransaction.amount)
-            : existPurpose.current_amount - Number(selectedTransaction.amount);
+          existPurpose.current_amount + Number(selectedTransaction.amount);
 
         helper.save("save", savePurpose, {
           newEntity: {

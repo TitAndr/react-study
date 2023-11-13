@@ -16,7 +16,7 @@ const Home = () => {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col justify-between gap-4 desktop:flex-row">
         <Balance walletList={wallets} />
-        <div className="flex flex-col justify-between items-center gap-6 mobile:flex-row">
+        <div className="flex flex-col justify-between items-center gap-6 mobile:flex-row min-w-[35vw]">
           <PaymentAction
             type="outcome"
             disable={currentWallet?.balance === 0}

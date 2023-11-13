@@ -318,6 +318,10 @@ export const GlobalProvider = ({ children }) => {
     }
   }, [state.user]);
 
+  useEffect(() => {
+    setPaymentTypes(state.cards.length === 0 ? [paymentTypes[0]] : paymentTypes);
+  }, [state.cards])
+
   return (
     <GlobalContext.Provider
       value={{
@@ -332,6 +336,7 @@ export const GlobalProvider = ({ children }) => {
         paymentTypes: state.paymentTypes,
         total_infos: state.total_infos,
         transactions: state.transactions,
+        allPaymentTypes: paymentTypes,
         user: state.user,
         currencies,
         categories,
@@ -343,6 +348,7 @@ export const GlobalProvider = ({ children }) => {
         setLoading,
         setTotalInfos,
         setNotification,
+        setPaymentTypes,
         switchTheme,
         changeLanguage,
         setCurrentWallet,

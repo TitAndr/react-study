@@ -63,7 +63,7 @@ const TransactionList = ({ transactions }) => {
     direction: "ascending",
   });
   const [page, setPage] = useState(1);
-  const { paymentTypes, categories, currentWallet, language } =
+  const { allPaymentTypes, categories, currentWallet, language } =
     useContext(GlobalContext);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -145,7 +145,11 @@ const TransactionList = ({ transactions }) => {
         case "created_at":
           return (
             <p className="text-small">
-              {new Date(cellValue).toDateString().replace(/^.{3}\B/g, "")}
+              {new Date(cellValue).toLocaleString(language[0], {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </p>
           );
         case "amount":
@@ -177,7 +181,7 @@ const TransactionList = ({ transactions }) => {
               <img
                 width={15}
                 src={helper.getImgUrl(
-                  paymentTypes.find((c) => c.value === cellValue)?.src
+                  allPaymentTypes.find((c) => c.value === cellValue)?.src
                 )}
                 alt="payment"
               />
@@ -194,7 +198,7 @@ const TransactionList = ({ transactions }) => {
           return cellValue;
       }
     },
-    [paymentTypes]
+    [currentWallet]
   );
 
   const onRowsPerPageChange = useCallback((e) => {
@@ -220,7 +224,11 @@ const TransactionList = ({ transactions }) => {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center justify-between gap-3 mobile:items-end mobile:flex-row">
-          <Button radius="full" className="bg-[#4F46E5] text-white">
+          <Button
+            radius="full"
+            className="bg-[#4F46E5] text-white"
+            onClick={() => alert("Not implemented yet...")}
+          >
             {t("transaction.Excel")}
           </Button>
           <Input

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Input, Checkbox, useDisclosure } from "@nextui-org/react";
 import helper from "../../utils/helper";
@@ -21,7 +22,7 @@ const useCardPopup = () => {
         card || {
           holder: "",
           card_number: "",
-          expiry_date: new Date(),
+          expiry_date: new Date().toISOString().replace(/T.{1,}/g, ""),
           cvv: "",
           is_primary: !!disablePrimary,
         }
