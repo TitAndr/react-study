@@ -3,10 +3,22 @@ import { Card, CardBody } from "@nextui-org/react";
 import helper from "../utils/helper";
 import usePaymentPopup from "./Popups/PaymentPopup";
 import { useTranslation } from "react-i18next";
+import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
 
-const PaymentAction = ({ label, type }) => {
+const PaymentAction = ({ label, type, disable }) => {
   const { t } = useTranslation();
+  const { setNotification } = useContext(GlobalContext);
   const { PaymentPopup, onOpen } = usePaymentPopup();
+
+  const openPayment = () => {
+    if (disable) {
+      setNotification({ type: "error", message: "popup.ErrorPayment" });
+      return;
+    }
+
+    onOpen();
+  };
 
   return (
     <>
@@ -14,7 +26,7 @@ const PaymentAction = ({ label, type }) => {
         className="w-[85%] mobile:w-full desktop:max-w-[230px] desktop:min-w-[200px]"
         shadow="sm"
         isPressable
-        onPress={onOpen}
+        onClick={openPayment}
       >
         <CardBody className="overflow-visible items-center">
           <img

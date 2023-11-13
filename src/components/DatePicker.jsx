@@ -2,7 +2,10 @@
 import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 
-const DatePicker = ({ date, setDate }) => {
+const DatePicker = ({ date, setDate, locale }) => {
+  const [show, setShow] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(date);
+
   const options = {
     autoHide: true,
     todayBtn: true,
@@ -11,9 +14,7 @@ const DatePicker = ({ date, setDate }) => {
     minDate: new Date("1950-01-01"),
     datepickerClassNames: "top-12",
     defaultDate: date || new Date(),
-    language: "en",
-    disabledDates: [],
-    weekDays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    language: locale[0]?.slice(0, 2) || "en",
     inputNameProp: "date",
     inputIdProp: "date",
     inputPlaceholderProp: "Select Date",
@@ -23,9 +24,6 @@ const DatePicker = ({ date, setDate }) => {
       year: "numeric",
     },
   };
-
-  const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(date);
 
   const handleClose = (state) => {
     setShow(state);

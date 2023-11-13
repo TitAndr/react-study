@@ -15,7 +15,7 @@ import Auth from "./pages/Auth";
 import Loading from "./components/Loading";
 import Notification from "./components/Notification";
 import useResetPopup from "./components/Popups/ResetPopup";
-import './i18n/index';
+import "./i18n/index";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -54,15 +54,12 @@ function App() {
         <>
           <MainLayout session={session}>
             <Routes>
-              <Route
-                path="/"
-                element={<HomePage />}
-                errorElement={<ErrorPage />}
-              />
+              <Route path="/" element={<HomePage />} />
               <Route path="/card" element={<CardPage />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/finance-chart" element={<FinanceChart />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </MainLayout>
         </>

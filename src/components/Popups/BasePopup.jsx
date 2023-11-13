@@ -72,12 +72,12 @@ const BasePopup = ({
       onOpenChange={onOpenChange}
       placement="center"
       isDismissable={!isDismissable}
-      className={`${darkMode ? "dark text-white" : "light"}`}
+      className={`${darkMode ? "dark text-white" : "light"} max-[490px]:w-[90vw]`}
     >
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 text-[1.7rem]">
+            <ModalHeader className="flex flex-col gap-1 text-[1.7rem] text-center">
               {title}
             </ModalHeader>
             <ModalBody>{children}</ModalBody>

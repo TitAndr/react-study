@@ -145,6 +145,7 @@ export default {
       Cancel: "Cancel",
       Save: "Save",
       ExpiryDate: "Expiry date",
+      "ErrorPayment": "如果您的钱包余额为 0，则无法发送付款",
       CardNumber: "Card number",
       Category: "Category",
       SelectPurpose: "Select for a purpose",

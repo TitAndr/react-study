@@ -174,8 +174,9 @@ export default {
       Other: "Other",
       Cash: "Cash",
       "Card (primary)": "Card (primary)",
-      SendLintReset:
-        'Send a reset password link to your <b>email</b>',
+      SendLintReset: "Send a reset password link to your <b>email</b>",
+      ErrorPayment:
+        "Vous ne pouvez pas envoyer de paiement si le solde de votre portefeuille est de 0",
     },
     error: {
       Title: "We are sorry, Page not found!",

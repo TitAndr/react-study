@@ -161,6 +161,7 @@ export default {
       CreatePassword: "Create a new password",
       MakePayment: "Make a payment",
       Salary: "Salary",
+      ErrorPayment: "You can't send a payment if your wallet's balance is 0",
       Investment: "Investment",
       "Bank transfer": "Bank transfer",
       "Other source": "Other source",

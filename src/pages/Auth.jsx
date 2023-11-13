@@ -53,9 +53,12 @@ const Auth = ({ openReset }) => {
     setLoading(true);
 
     if (isNew) {
-      await createInitData(loginInfo, {
-        password: passwords.confirm,
-      });
+      await createInitData(
+        { ...loginInfo },
+        {
+          password: passwords.confirm,
+        }
+      );
       setLoading(false);
       changeUser();
 
@@ -122,7 +125,9 @@ const Auth = ({ openReset }) => {
             orientation="horizontal"
             className="gender"
             value={loginInfo.gender}
-            onChange={(e) => setLoginInfo({ ...e, gender: e.target.value })}
+            onChange={(e) =>
+              handleField("gender", e.target.value, setLoginInfo)
+            }
           >
             <Radio color="success" value="male">
               {t("auth.Male")}
@@ -217,7 +222,7 @@ const Auth = ({ openReset }) => {
       </div>
       <Card
         className={`login-form w-[390px] max-h-[95vh] ${
-          isNew ? "min-h-[680px] max-[630px]:min-h-[815px]" : "min-h-[550px]"
+          isNew ? "min-h-[680px] max-[630px]:min-h-[730px]" : "min-h-[550px]"
         }`}
       >
         <CardHeader className="flex flex-col gap-2 pt-5 justify-center items-center relative">
@@ -229,7 +234,7 @@ const Auth = ({ openReset }) => {
             withoutEdit
             forPopup
           />
-          <h1 className="font-bold m-none text-[2.5rem] px-2 text-center">
+          <h1 className="font-bold m-none text-[2rem] px-2 text-center">
             {t(`auth.${isNew ? "NewTilte" : "Tilte"}`)}
           </h1>
         </CardHeader>
@@ -252,7 +257,7 @@ const Auth = ({ openReset }) => {
             {t(`auth.${isNew ? "SignUp" : "LogIn"}`)}
           </Button>
           <div className="flex items-center justify-center gap-3 mt-3 mb-2">
-            <span>{t(`auth.${isNew ? "LogInText" : "HaveAccount"}`)}</span>
+            <span>{t(`auth.${isNew ? "HaveAccount" : "NewUser"}`)}</span>
             <span
               onClick={changeUser}
               className="cursor-pointer text-success-500 hover:text-success-300 font-bold"

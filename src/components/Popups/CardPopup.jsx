@@ -34,7 +34,7 @@ const useCardPopup = () => {
 
     const onCallback = (type, onClose) => {
       if (type === "save") {
-        if (!isValid(selectedCard)) {
+        if (!isValid(setSelectedCard)) {
           return;
         }
 
@@ -72,7 +72,7 @@ const useCardPopup = () => {
               errorMessage={getError(
                 "card_number",
                 selectedCard,
-                "required|card_num"
+                "required|card_num|min:16|max:19"
               )}
               onChange={(e) => {
                 handleField("card_number", e.target.value, setSelectedCard);

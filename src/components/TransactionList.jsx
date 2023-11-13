@@ -63,7 +63,8 @@ const TransactionList = ({ transactions }) => {
     direction: "ascending",
   });
   const [page, setPage] = useState(1);
-  const { paymentTypes, categories, currentWallet } = useContext(GlobalContext);
+  const { paymentTypes, categories, currentWallet, language } =
+    useContext(GlobalContext);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -134,67 +135,67 @@ const TransactionList = ({ transactions }) => {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((tr, columnKey) => {
-    const cellValue = tr[columnKey];
+  const renderCell = useCallback(
+    (tr, columnKey) => {
+      const cellValue = tr[columnKey];
 
-    switch (columnKey) {
-      case "name":
-        return <p className="font-bold capitalize">{cellValue}</p>;
-      case "created_at":
-        return (
-          <p className="text-small">
-            {new Date(cellValue).toDateString().replace(/^.{3}\B/g, "")}
-          </p>
-        );
-      case "amount":
-        return (
-          <p className={`text-${tr.type === "income" ? "success" : "danger"}`}>
-            {(tr.type === "outcome" ? "-" : "") +
-              currentWallet.currency +
-              cellValue}
-          </p>
-        );
-      case "category":
-        return (
-          <div className="flex items-center gap-2">
-            <img
-              width={15}
-              src={helper.getImgUrl(
-                categories.find((c) => c.value === cellValue)?.src
-              )}
-              alt="category"
-            />
-            <span>{t(`popup.${cellValue}`)}</span>
-          </div>
-        );
-      case "payment":
-        return (
-          <div className="flex items-center gap-2">
-            <img
-              width={15}
-              src={helper.getImgUrl(
-                paymentTypes.find((c) => c.value === cellValue)?.src
-              )}
-              alt="payment"
-            />
-            <span>{t(`popup.${cellValue}`)}</span>
-          </div>
-        );
-      case "type":
-        return (
-          <Chip
-            className="capitalize"
-            color={typeColorMap[tr.type]}
-            size="md"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+      switch (columnKey) {
+        case "name":
+          return <p className="font-bold capitalize">{cellValue}</p>;
+        case "created_at":
+          return (
+            <p className="text-small">
+              {new Date(cellValue).toDateString().replace(/^.{3}\B/g, "")}
+            </p>
+          );
+        case "amount":
+          return (
+            <p
+              className={`text-${tr.type === "income" ? "success" : "danger"}`}
+            >
+              {(tr.type === "outcome" ? "-" : "") +
+                (currentWallet?.currency || "") +
+                cellValue}
+            </p>
+          );
+        case "category":
+          return (
+            <div className="flex items-center gap-2">
+              <img
+                width={15}
+                src={helper.getImgUrl(
+                  categories.find((c) => c.value === cellValue)?.src
+                )}
+                alt="category"
+              />
+              <span>{t(`popup.${cellValue}`)}</span>
+            </div>
+          );
+        case "payment":
+          return (
+            <div className="flex items-center gap-2">
+              <img
+                width={15}
+                src={helper.getImgUrl(
+                  paymentTypes.find((c) => c.value === cellValue)?.src
+                )}
+                alt="payment"
+              />
+              <span>{t(`popup.${cellValue}`)}</span>
+            </div>
+          );
+        case "type":
+          return (
+            <Chip color={typeColorMap[tr.type]} size="md" variant="flat">
+              {t(`transaction.${helper.capitalize(cellValue)}`)}
+            </Chip>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    [paymentTypes]
+  );
 
   const onRowsPerPageChange = useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
@@ -277,7 +278,7 @@ const TransactionList = ({ transactions }) => {
                   <DropdownItem key={category.value} className="capitalize">
                     <div className="flex items-center gap-2">
                       <img width={15} src={helper.getImgUrl(category.src)} />
-                      <span>{category.value}</span>
+                      <span>{t(`popup.${category.value}`)}</span>
                     </div>
                   </DropdownItem>
                 ))}
@@ -285,11 +286,16 @@ const TransactionList = ({ transactions }) => {
             </Dropdown>
             <div className="flex items-center gap-3 mobile:max-w-[215px] w-[60vw] mobile:w-full max-[380px]:w-full justify-between">
               <label>{t("transaction.From")}:</label>
-              <DatePicker date={fromDateFilter} setDate={setFromDateFilter} />
+              <DatePicker
+                locale={language}
+                date={fromDateFilter}
+                setDate={setFromDateFilter}
+              />
             </div>
             <div className="flex items-center gap-3 mobile:max-w-[215px] w-[60vw] mobile:w-full max-[380px]:w-full justify-between">
               <label>{t("transaction.To")}:</label>
               <DatePicker
+                locale={language}
                 date={toDateFilter}
                 setDate={(date) =>
                   setToDateFilter(new Date(date.setHours(23, 59, 59, 999)))

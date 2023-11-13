@@ -23,6 +23,10 @@ const CustomAvatar = ({
     imgCallback && photo ? imgCallback(photo) : null;
   }, [photo]);
 
+  useEffect(() => {
+    setPhoto(image);
+  }, [image]);
+
   return (
     <div
       className={`relative flex justify-center items-center ${

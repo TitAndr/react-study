@@ -8,7 +8,7 @@ import { GlobalContext } from "../context/GlobalState";
 import useWalletPopup from "../components/Popups/WalletPopup";
 
 const Home = () => {
-  const { purposes, wallets } = useContext(GlobalContext);
+  const { purposes, wallets, currentWallet } = useContext(GlobalContext);
   const { WalletPopup, onOpen } = useWalletPopup();
   const { t } = useTranslation();
 
@@ -17,7 +17,11 @@ const Home = () => {
       <div className="flex flex-col justify-between gap-4 desktop:flex-row">
         <Balance walletList={wallets} />
         <div className="flex flex-col justify-between items-center gap-6 mobile:flex-row">
-          <PaymentAction type="outcome" label={t("home.SendPayment")} />
+          <PaymentAction
+            type="outcome"
+            disable={currentWallet?.balance === 0}
+            label={t("home.SendPayment")}
+          />
           <PaymentAction type="income" label={t("home.RequestPayment")} />
         </div>
       </div>

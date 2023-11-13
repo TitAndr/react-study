@@ -216,6 +216,7 @@ export const GlobalProvider = ({ children }) => {
       // create new userInfo
       await saveUser("insert", {
         ...args[0],
+        ...args[1],
         photo: "",
         user_id: data.user.id,
       });
