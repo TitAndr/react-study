@@ -134,7 +134,7 @@ const usePaymentPopup = () => {
               "amount",
               selectedTransaction,
               `required|numeric|not_regex:^0|max:${
-                type === "outcome" ? currentWallet?.balance : "999999"
+                type === "outcome" ? currentWallet?.balance || 0 : "999999"
               },num`
             )}
             onChange={(e) => {

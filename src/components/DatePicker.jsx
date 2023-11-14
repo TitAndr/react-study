@@ -8,7 +8,7 @@ const DatePicker = ({ date, setDate, locale }) => {
 
   const options = {
     autoHide: true,
-    todayBtn: true,
+    todayBtn: false,
     clearBtn: false,
     maxDate: new Date(new Date().setHours(23, 59, 59, 999)),
     minDate: new Date("1950-01-01"),

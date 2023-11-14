@@ -82,6 +82,7 @@ const useWalletPopup = () => {
             <div className="flex gap-3 max-[400px]:flex-col">
               <Select
                 isRequired
+                disallowEmptySelection
                 label={t("wallet.SelectCurrency")}
                 className="max-w-xs"
                 defaultSelectedKeys={[selectedWallet.currency]}

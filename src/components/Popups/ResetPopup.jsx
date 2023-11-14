@@ -69,7 +69,6 @@ const useResetPopup = () => {
         onOpenChange={onOpenChange}
         title={getTitle()}
         footerContent={getFooterContent}
-        isDismissable={!isLogIn}
         withoutRemove
       >
         {!isLogIn ? (

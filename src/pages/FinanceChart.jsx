@@ -92,6 +92,7 @@ const FinanceChart = () => {
 
   useEffect(() => {
     setIncomeOutComeList({ currentKey: "income" });
+    filteredData();
     setTotalInfos();
   }, [transactions]);
 
@@ -109,6 +110,7 @@ const FinanceChart = () => {
                 labelPlacement="outside"
                 className="w-[150px]"
                 selectedKeys={[chartType]}
+                disallowEmptySelection
                 onSelectionChange={setIncomeOutComeList}
               >
                 {incomeOutComeList.map((line) => (
@@ -120,6 +122,7 @@ const FinanceChart = () => {
               <Select
                 labelPlacement="outside"
                 className="w-[120px]"
+                disallowEmptySelection
                 selectedKeys={[chartDay.label]}
                 onSelectionChange={({ currentKey }) => {
                   setChartDay(chartDays.find((d) => d.label === currentKey));

@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import { useTranslation } from "react-i18next";
 
@@ -25,19 +25,42 @@ ChartJS.register(
   Legend
 );
 
+const getSummAmount = (data, days) => {
+  const result =
+    days !== 1
+      ? [...data].reduce((acc, item) => {
+          const exist = acc.find(
+            (i) =>
+              new Date(i.created_at).toLocaleDateString() ===
+              new Date(item.created_at).toLocaleDateString()
+          );
+
+          if (exist) {
+            exist.amount += item.amount;
+          } else {
+            acc.push({ ...item });
+          }
+
+          return acc;
+        }, [])
+      : data;
+
+  return [...result];
+};
+
 const Chart = ({ historicalData = [], type = "income", days }) => {
   const { t } = useTranslation();
   const { currentWallet } = useContext(GlobalContext);
 
-  const getDataSets = () => {
+  const getDataSets = useMemo(() => {
     const incomeData = historicalData.income || historicalData;
     const outcomeData = historicalData.outcome || historicalData;
 
     const incomeChart =
       historicalData.income || type === "income"
         ? {
-            data: incomeData.map((v) => v.amount),
-            label: t("finance.IncomeTitle", { time: days.labe }),
+            data: getSummAmount(incomeData, days.value).map((v) => v.amount),
+            label: t("finance.IncomeTitle", { time: days.label }),
             borderColor: "#35f202",
           }
         : null;
@@ -45,8 +68,8 @@ const Chart = ({ historicalData = [], type = "income", days }) => {
     const outcomeChart =
       historicalData.outcome || type === "outcome"
         ? {
-            data: outcomeData.map((v) => v.amount),
-            label:  t("finance.OutcomeTitle", { time: days.labe }),
+            data: getSummAmount(outcomeData, days.value).map((v) => v.amount),
+            label: t("finance.OutcomeTitle", { time: days.label }),
             borderColor: "#f21202",
           }
         : null;
@@ -65,14 +88,23 @@ const Chart = ({ historicalData = [], type = "income", days }) => {
     } else {
       return [incomeChart, outcomeChart];
     }
-  };
+  }, [historicalData]);
 
   const getLabelsData = () => {
     const data = Array.isArray(historicalData)
       ? historicalData
       : historicalData.created_at;
 
-    return [...new Map(data.map((i) => [i.created_at, i])).values()];
+    return [
+      ...new Map(
+        data.map((i) => [
+          type === "combined"
+            ? new Date(i.created_at).toLocaleDateString()
+            : i.created_at,
+          i,
+        ])
+      ).values(),
+    ];
   };
 
   return (
@@ -83,16 +115,16 @@ const Chart = ({ historicalData = [], type = "income", days }) => {
           let date = new Date(i.created_at);
           let time =
             date.getHours() > 12
-              ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+              ? `${date.getHours() - 12}:${
+                  date.getMinutes() < 10 ? "0" : ""
+                }${date.getMinutes()} PM`
               : `${date.getHours()}:${
-                  date.getMinutes() < 10
-                    ? "0" + date.getMinutes()
-                    : date.getMinutes()
-                } AM`;
+                  date.getMinutes() < 10 ? "0" : ""
+                }${date.getMinutes()} AM`;
 
           return days.value === 1 ? time : date.toLocaleDateString();
         }),
-        datasets: getDataSets(),
+        datasets: getDataSets,
       }}
       options={{
         elements: { point: { radius: 1 } },

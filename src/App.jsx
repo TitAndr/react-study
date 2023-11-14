@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "./App.css";
 import { GlobalProvider } from "./context/GlobalState";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
 import CardPage from "./pages/CardPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -20,24 +20,35 @@ import "./i18n/index";
 function App() {
   const [session, setSession] = useState(null);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { ResetPopup, onOpen: openReset } = useResetPopup();
 
   useEffect(() => {
+    let currentSession = null;
+
+    const setCurrentSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      currentSession = data.session;
+    };
+
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
+    } = supabase.auth.onAuthStateChange(async (_event, _session) => {
+      if (!_session || currentSession?.access_token !== _session.access_token) {
+        setSession(_session);
+      }
+
       if (_event == "PASSWORD_RECOVERY") {
         openReset();
       }
-      if (!session || !session.user) {
+      if (!_session || !_session.user) {
         navigate("/login");
       }
-      if (session && pathname === "/login") {
+      if (_session && window.location.pathname === "/login") {
         navigate("/");
       }
     });
+
+    setCurrentSession();
 
     return () => subscription.unsubscribe();
   }, []);

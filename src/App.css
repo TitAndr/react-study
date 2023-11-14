@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    touch-action: manipulation;
+}
+
 .wrapper,
 .header {
     width: calc(100vw - 260px);
@@ -48,7 +52,7 @@
     color: white !important;
 }
 
-.gender > div {
+.gender>div {
     flex-direction: row;
     justify-content: space-around;
     margin-top: 10px;
@@ -321,7 +325,7 @@
         font-size: 1.3rem;
     }
 
-    .picker > div:last-child {
+    .picker>div:last-child {
         right: 0;
     }
 }

@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 
 const BasePopup = ({
   isOpen,
-  isDismissable,
   onOpenChange,
   withoutRemove,
   title,
@@ -71,8 +70,10 @@ const BasePopup = ({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       placement="center"
-      isDismissable={!isDismissable}
-      className={`${darkMode ? "dark text-white" : "light"} max-[490px]:w-[90vw]`}
+      isDismissable={false}
+      className={`${
+        darkMode ? "dark text-white" : "light"
+      } max-[490px]:w-[90vw]`}
     >
       <ModalContent>
         {(onClose) => (

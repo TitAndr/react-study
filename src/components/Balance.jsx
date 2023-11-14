@@ -86,7 +86,7 @@ const Balance = ({ walletList }) => {
         <CardBody className="py-0 px-[1.25rem]">
           <div className="flex justify-between items-center">
             <span className="text-[1.3rem]">{t("wallet.TotalBalance")}:</span>
-            <span className="text-[4rem] font-bold">
+            <span className="text-[3rem] font-bold min-[430px]:text-[4rem]">
               {currentWallet.currency}
               {currentWallet.balance}
             </span>

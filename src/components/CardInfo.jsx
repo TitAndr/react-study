@@ -53,7 +53,7 @@ const CardInfo = ({ card }) => {
         {card ? (
           <>
             <div className="flex justify-between w-full mb-4 items-center">
-              <span className="font-bold text-[1.3rem]">{t("card.CardInformation")}</span>
+              <span className="font-bold text-[1.1rem]">{t("card.CardInformation")}</span>
               <span className="font-bold p-1 text-center uppercase text-red-500 border-solid border-3 rounded-large border-red-500 mobile:p-2">
                 {t("card.PrimaryCard")}
               </span>

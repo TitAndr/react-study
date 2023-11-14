@@ -16,6 +16,7 @@ function CustomSelect({
   return (
     <Select
       isRequired
+      disallowEmptySelection
       label={label}
       className="max-w-xs"
       selectedKeys={value}

@@ -9,10 +9,6 @@ const LanguageSwitch = ({ isLogin }) => {
     useContext(GlobalContext);
 
   const setLanguage = ({ currentKey }) => {
-    if (!currentKey) {
-      currentKey = localStorage.getItem("language");
-    }
-
     i18n.changeLanguage(currentKey.slice(0, 2));
     changeLanguage(currentKey);
     localStorage.setItem("language", currentKey);
@@ -21,6 +17,7 @@ const LanguageSwitch = ({ isLogin }) => {
 
   return (
     <Select
+      disallowEmptySelection
       className="max-w-xs"
       radius="full"
       size="md"

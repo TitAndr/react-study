@@ -82,7 +82,7 @@ const Purpose = ({ purpose }) => {
         </Card>
       ) : (
         <CreateButton
-          classes={"h-full"}
+          classes={"h-full min-w-[220px]"}
           label={t("purpose.CreatePurpose")}
           onOpen={onOpen}
         />
