@@ -2,14 +2,12 @@
 import { Avatar, Select, SelectItem } from "@nextui-org/react";
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
-import i18n from "../i18n/index";
 
 const LanguageSwitch = ({ isLogin }) => {
   const { darkMode, language, languagesList, changeLanguage } =
     useContext(GlobalContext);
 
   const setLanguage = ({ currentKey }) => {
-    i18n.changeLanguage(currentKey.slice(0, 2));
     changeLanguage(currentKey);
     localStorage.setItem("language", currentKey);
     window.location.reload();
