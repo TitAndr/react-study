@@ -329,3 +329,16 @@ body {
         right: 0;
     }
 }
+
+@media (max-height: 730px) {
+    .menu--item > button {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    .menu--item > div {
+        margin-bottom: .5rem;
+    }
+    .menu--item-logout {
+        margin-top: 20px;
+    }
+}

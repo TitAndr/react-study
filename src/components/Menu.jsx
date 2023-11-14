@@ -36,11 +36,9 @@ const Menu = ({ mobile, menuChange }) => {
       <>
         <Button
           onClick={() => navigateTo("/")}
-          className={`w-full h-[70px] ${
+          className={`w-[250px] h-[70px] ${
             mobile ? "my-2" : ""
-          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-${
-            mobile ? "center" : "start"
-          } text-white hover:text-[#338EF7]`}
+          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-start text-white hover:text-[#338EF7]`}
           color="primary"
           variant="light"
           startContent={
@@ -51,11 +49,9 @@ const Menu = ({ mobile, menuChange }) => {
         </Button>
         <Button
           onClick={() => navigateTo("/card")}
-          className={`w-full h-[70px] ${
+          className={`w-[250px] h-[70px] ${
             mobile ? "my-2" : ""
-          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-${
-            mobile ? "center" : "start"
-          } text-white hover:text-[#338EF7]`}
+          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-start text-white hover:text-[#338EF7]`}
           color="primary"
           variant="light"
           startContent={
@@ -70,11 +66,9 @@ const Menu = ({ mobile, menuChange }) => {
         </Button>
         <Button
           onClick={() => navigateTo("/finance-chart")}
-          className={`w-full h-[70px] ${
+          className={`w-[250px] h-[70px] ${
             mobile ? "my-2" : ""
-          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-${
-            mobile ? "center" : "start"
-          } text-white hover:text-[#338EF7]`}
+          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-start text-white hover:text-[#338EF7]`}
           color="primary"
           variant="light"
           startContent={
@@ -89,11 +83,9 @@ const Menu = ({ mobile, menuChange }) => {
         </Button>
         <Button
           onClick={() => navigateTo("/transactions")}
-          className={`w-full h-[70px] ${
+          className={`w-[250px] h-[70px] ${
             mobile ? "my-2" : ""
-          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-${
-            mobile ? "center" : "start"
-          } text-white hover:text-[#338EF7]`}
+          } gap-unit-6 px-unit-8 text-[1.2rem] font-bold justify-start text-white hover:text-[#338EF7]`}
           color="primary"
           variant="light"
           startContent={
@@ -142,8 +134,8 @@ const Menu = ({ mobile, menuChange }) => {
           </div>
         </>
       ) : (
-        <NavbarMenu className="py-5 justify-between bg-[#080325]">
-          <NavbarMenuItem>
+        <NavbarMenu className="menu py-5 justify-start bg-[#080325]">
+          <NavbarMenuItem className="menu--item flex flex-col items-center">
             <div className="flex flex-col justify-center items-center mb-5">
               <div className="flex justify-between w-full pb-3">
                 <LanguageSwitch />
@@ -153,7 +145,7 @@ const Menu = ({ mobile, menuChange }) => {
             </div>
             {menuList()}
           </NavbarMenuItem>
-          <NavbarMenuItem className="text-center">
+          <NavbarMenuItem className="menu--item-logout text-center mt-10">
             <Button
               className="logout w-[90%] h-[50px] text-[1.2rem] font-bold gap-unit-5"
               color="success"
