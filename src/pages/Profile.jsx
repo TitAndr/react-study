@@ -1,6 +1,6 @@
 import { Divider, RadioGroup, Radio, Button } from "@nextui-org/react";
 import CustomAvatar from "../components/CustomAvatar";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import helper from "../utils/helper";
 import Validation from "../utils/validation";
@@ -44,6 +44,10 @@ const Profile = () => {
     });
   };
 
+  const getImage = useMemo(() => {
+    return user?.photo || helper.getImgUrl(`${gender ? gender : "male"}.png`);
+  }, [user, gender]);
+
   useEffect(() => {
     setCurrentUser(
       user || {
@@ -60,9 +64,9 @@ const Profile = () => {
     <div className="flex flex-col items-center justify-around h-[65vh] gap-6 min-h-[740px] mobile:min-h-[480px]">
       {user ? (
         <CustomAvatar
-          image={user?.photo}
+          image={getImage}
           imgCallback={(img) => setCurrentUser((p) => ({ ...p, photo: img }))}
-          fallbackImg={gender + `.png`}
+          fallbackImg={helper.getImgUrl(`${gender ? gender : "male"}.png`)}
         />
       ) : (
         <></>

@@ -17,7 +17,7 @@ const CardPage = () => {
         <CardInfo card={cards.find((c) => c.is_primary) || cards[0]} />
       </div>
       <div className="flex flex-col justify-between w-full laptop:w-[45%] h-[450px]">
-        <CardList />
+        {cards.length > 0 ? <CardList /> : <></>}
         <CreateButton label={t("card.AddNewCard")} onOpen={onOpen} />
       </div>
       <CardPopup

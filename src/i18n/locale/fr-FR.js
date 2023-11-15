@@ -52,7 +52,7 @@ export default {
       UploadSomethingWrong:
         "Une erreur s'est produite lors du téléchargement...",
       ImageSizeError:
-        "L'image est trop volumineuse (> 8 Mo) et ne peut pas être téléchargée.",
+        "L'image est trop volumineuse (> 1 Mo) et ne peut pas être téléchargée.",
       ImageTypeError: "Format de fichier non autorisé.",
       AccountCreated: "Le compte a été créé avec succès. ",
     },

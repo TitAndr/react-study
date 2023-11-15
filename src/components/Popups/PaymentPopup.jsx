@@ -16,6 +16,7 @@ const usePaymentPopup = () => {
 
   const PaymentPopup = ({ type, title }) => {
     const {
+      cards,
       purposes,
       categories,
       paymentTypes,
@@ -29,7 +30,7 @@ const usePaymentPopup = () => {
       type,
       name: "",
       amount: "",
-      payment: "",
+      payment: cards.length === 0 ? paymentTypes[0].value : "",
       category: "",
       wallet_id: currentWallet?.id,
       created_at: new Date().toISOString().replace(/T.{1,}/g, ""),
@@ -108,6 +109,12 @@ const usePaymentPopup = () => {
       );
     };
 
+    const getPurposes = () => {
+      return purposes.length > 0
+        ? purposes.filter((p) => p.amount > p.current_amount)
+        : [];
+    };
+
     useEffect(() => {
       hideMessages();
     }, []);
@@ -161,14 +168,14 @@ const usePaymentPopup = () => {
               handleField("name", e.target.value, setTransaction);
             }}
           />
-          {type === "outcome" && purposes.length > 0 ? (
+          {type === "outcome" && getPurposes().length > 0 ? (
             <div className="flex justify-center">
               <Select
                 label={t("popup.SelectPurpose")}
                 className="max-w-xs"
                 onSelectionChange={setPurpose}
               >
-                {purposes.map((purpose) => (
+                {getPurposes().map((purpose) => (
                   <SelectItem
                     key={purpose.id}
                     value={purpose.name}

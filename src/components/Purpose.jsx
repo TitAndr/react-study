@@ -22,6 +22,12 @@ const Purpose = ({ purpose }) => {
 
   const { PurposePopup, onOpen } = usePurposePopup();
 
+  const isCompleted = () => {
+    return purpose
+      ? !!purpose.amount && purpose.amount <= purpose.current_amount
+      : false;
+  };
+
   useLayoutEffect(() => {
     setProgressValue(formatProgress(currentAmount, purpose?.amount || 1));
   }, [purpose]);
@@ -34,20 +40,30 @@ const Purpose = ({ purpose }) => {
           isPressable
           onPress={onOpen}
         >
-          <CardHeader className="flex flex-col items-start gap-3 pb-0">
+          <CardHeader className="flex flex-col items-start gap-3 pb-0 relative">
             <div className="flex gap-3 items-center">
               <img
                 alt="purpose"
                 width={40}
                 src={purpose?.photo || helper.getImgUrl("purpose.png")}
               />
-              <span className="m-none text-[1rem] font-semibold">
+              <span className="m-none text-[1rem] w-[65%] font-semibold tablet:max-w-[130px] text-ellipsis overflow-hidden">
                 {purpose.name}
               </span>
             </div>
             <span className="m-none text-[1rem] text-default-500">
               {t("purpose.LastPaid")}: {helper.timeSince(purpose.last_paid)}
             </span>
+            {isCompleted() ? (
+              <img
+                className="absolute top-2 right-1"
+                width={50}
+                src={helper.getImgUrl("completed.png")}
+                alt="completed"
+              />
+            ) : (
+              <></>
+            )}
           </CardHeader>
           <CardBody className="px-5 py-3">
             <Progress
@@ -73,7 +89,11 @@ const Purpose = ({ purpose }) => {
               classNames={{
                 base: "max-w-md",
                 track: "drop-shadow-md border border-default",
-                indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+                indicator: `${
+                  isCompleted()
+                    ? "bg-success"
+                    : "bg-gradient-to-r from-pink-500 to-yellow-500"
+                }`,
                 label: "tracking-wider font-medium text-default-600",
                 value: "text-foreground/80",
               }}

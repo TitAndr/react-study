@@ -3,7 +3,8 @@
 /* eslint-disable react/prop-types */
 import { Avatar, Button } from "@nextui-org/react";
 import helper from "../utils/helper";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
+import { GlobalContext } from "../context/GlobalState";
 
 const CustomAvatar = ({
   forPopup,
@@ -12,12 +13,23 @@ const CustomAvatar = ({
   fallbackImg,
   withoutEdit,
 }) => {
+  const { setNotification } = useContext(GlobalContext);
   const [photo, setPhoto] = useState(image || null);
   const fileRef = useRef();
 
   const removePhoto = () => {
     setPhoto(null);
     imgCallback(null);
+    fileRef.current.value = "";
+  };
+
+  const onSelectImg = (img, error) => {
+    if (!img && error) {
+      setNotification({ type: "error", message: error });
+      return;
+    }
+
+    setPhoto(img);
   };
 
   useEffect(() => {
@@ -39,7 +51,7 @@ const CustomAvatar = ({
         showFallback
         color={!forPopup ? "success" : ""}
         className={`${!forPopup ? "w-[150px] h-[150px]" : "w-[90px] h-[90px]"}`}
-        src={photo || helper.getImgUrl(fallbackImg)}
+        src={photo || fallbackImg}
       />
       {!withoutEdit ? (
         <>
@@ -53,7 +65,7 @@ const CustomAvatar = ({
           >
             <img src={helper.getImgUrl("edit.svg")} width={30} alt="edit" />
           </Button>
-          {photo ? (
+          {photo && typeof photo === "string" ? (
             <Button
               isIconOnly
               radius="full"
@@ -74,7 +86,8 @@ const CustomAvatar = ({
           <input
             ref={fileRef}
             type="file"
-            onChange={(e) => helper.onFilePicked(e, setPhoto)}
+            accept="image/*"
+            onChange={(e) => helper.onFilePicked(e, onSelectImg)}
             className="hidden"
           />
         </>

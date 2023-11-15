@@ -48,6 +48,13 @@ const usePurposePopup = () => {
       onClose();
     };
 
+    const isCompleted = () => {
+      return selectedPurpose
+        ? !!selectedPurpose.amount &&
+            selectedPurpose.amount <= selectedPurpose.current_amount
+        : false;
+    };
+
     useEffect(() => {
       hideMessages();
     }, []);
@@ -61,15 +68,24 @@ const usePurposePopup = () => {
         withoutRemove={!purpose}
       >
         <>
-          <div className="w-full flex justify-center mb-2">
+          <div className="relative w-full flex justify-center mb-2">
             <CustomAvatar
               forPopup={true}
-              fallbackImg="purpose.png"
-              image={selectedPurpose?.photo}
+              image={selectedPurpose?.photo || helper.getImgUrl("purpose.png")}
               imgCallback={(img) =>
                 setSelectedPurpose((p) => ({ ...p, photo: img }))
               }
             />
+            {isCompleted() ? (
+              <img
+                className="absolute top-[-70px] left-0"
+                width={50}
+                src={helper.getImgUrl("completed.png")}
+                alt="completed"
+              />
+            ) : (
+              <></>
+            )}
           </div>
           <CustomInput
             isRequired

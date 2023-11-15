@@ -5,7 +5,7 @@ import {
   Avatar,
   NavbarMenuToggle,
 } from "@nextui-org/react";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import LanguageSwitch from "./LanguageSwitch";
 import DarkMode from "./DarkMode";
 import Menu from "./Menu";
@@ -17,6 +17,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useContext(GlobalContext);
   const navigate = useNavigate();
+
+  const getImage = useMemo(() => {
+    return user?.photo || helper.getImgUrl(`${user?.gender || "male"}.png`);
+  }, [user]);
 
   return (
     <div className="header w-full">
@@ -44,14 +48,10 @@ const Header = () => {
               <Avatar
                 onClick={() => navigate("/profile")}
                 isBordered
-                showFallback
                 as="button"
                 color="success"
                 size="sm"
-                src={
-                  user?.photo ||
-                  helper.getImgUrl(`${user?.gender || "male"}.png`)
-                }
+                src={getImage}
               />
             ) : (
               <></>

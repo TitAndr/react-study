@@ -125,7 +125,7 @@ const useWalletPopup = () => {
                 errorMessage={getError(
                   "name",
                   selectedWallet,
-                  `required|isUnique:${getWalletsNames()}`
+                  `required|string|isUnique:${getWalletsNames()}`
                 )}
                 onChange={(e) => {
                   handleField("name", e.target.value, setSelectedWallet);

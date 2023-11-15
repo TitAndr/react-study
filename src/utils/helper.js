@@ -25,13 +25,19 @@ export default {
     const cb = typeof callback === "function" ? callback : null;
 
     if (files[0] !== undefined && files[0].name.lastIndexOf(".") > 0) {
+      let error = null;
       const extension = files[0].name.split(".").pop().toLowerCase();
 
       if (!["jpg", "gif", "jpeg", "png", "bmp"].includes(extension)) {
-        return;
+        error = "main.ImageTypeError";
       }
 
-      if (files[0].size > 100048576) {
+      if (files[0].size > 1048576) {
+        error = "main.ImageSizeError";
+      }
+
+      if (error) {
+        cb ? cb(null, error) : null;
         return;
       }
 

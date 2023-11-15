@@ -48,7 +48,7 @@ export default {
       RulePasswordSpecificCharacters:
         "Password must contains specific characters.",
       UploadSomethingWrong: "Something went wrong during uploading...",
-      ImageSizeError: "The image is too large (> 8 MB) and cannot be uploaded.",
+      ImageSizeError: "The image is too large (> 1 MB) and cannot be uploaded.",
       ImageTypeError: "File format not allowed.",
       AccountCreated:
         "Account was successfully created. Confirm your email to use this wonderful app.",

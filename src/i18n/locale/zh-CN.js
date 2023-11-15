@@ -47,7 +47,7 @@ export default {
       RulePasswordNumbers: "密码必须包含数字。",
       RulePasswordSpecificCharacters: "密码必须包含特定字符。",
       UploadSomethingWrong: "上传过程中出了点问题...",
-      ImageSizeError: "图片太大（> 8 MB），无法上传。",
+      ImageSizeError: "图片太大（> 1 MB），无法上传。",
       ImageTypeError: "不允许的文件格式。",
       AccountCreated: "帐户已成功创建。",
     },

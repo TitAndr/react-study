@@ -51,7 +51,7 @@ export default {
         "La contraseña debe contener caracteres específicos.",
       UploadSomethingWrong: "Algo salió mal durante la carga...",
       ImageSizeError:
-        "La imagen es demasiado grande (> 8 MB) y no se puede cargar.",
+        "La imagen es demasiado grande (> 1 MB) y no se puede cargar.",
       ImageTypeError: "Formato de archivo no permitido.",
       AccountCreated: "La cuenta fue creada exitosamente. ",
     },

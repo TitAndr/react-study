@@ -45,7 +45,7 @@ const Balance = ({ walletList }) => {
                 <img
                   className="absolute top-2 right-3 cursor-pointer"
                   width={30}
-                  src={helper.getImgUrl("settings.png")}
+                  src={helper.getImgUrl("change.png")}
                   alt="settings"
                 />
               </DropdownTrigger>
@@ -77,7 +77,7 @@ const Balance = ({ walletList }) => {
             <img
               className="absolute top-2 right-3 cursor-pointer"
               width={30}
-              src={helper.getImgUrl("settings.png")}
+              src={helper.getImgUrl("edit.png")}
               alt="settings"
               onClick={onOpen}
             />
