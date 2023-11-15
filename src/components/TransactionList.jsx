@@ -223,13 +223,20 @@ const TransactionList = ({ transactions }) => {
   const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col items-center justify-between gap-3 mobile:items-end mobile:flex-row">
+        <div className="flex items-center justify-between gap-4 mobile:items-end">
           <Button
             radius="full"
-            className="bg-[#4F46E5] text-white"
+            className="hidden bg-[#4F46E5] text-white min-[530px]:block"
             onClick={() => alert("Not implemented yet...")}
           >
             {t("transaction.Excel")}
+          </Button>
+          <Button
+            isIconOnly
+            className="hidden bg-[#4F46E5] max-[530px]:flex justify-center items-center"
+            onClick={() => alert("Not implemented yet...")}
+          >
+            <img width={30} src={helper.getImgUrl("excel.png")} alt="Excel" />
           </Button>
           <Input
             isClearable
@@ -243,55 +250,57 @@ const TransactionList = ({ transactions }) => {
         </div>
         <div className="flex flex-col gap-4 justify-between max-[700px]:justify-around items-center mobile:flex-row flex-wrap">
           <div className="flex flex-col gap-5 items-center min-[700px]:flex-row">
-            <Dropdown>
-              <DropdownTrigger className="flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
+            <div className="flex gap-5 items-center">
+              <Dropdown>
+                <DropdownTrigger className="flex">
+                  <Button
+                    endContent={<ChevronDownIcon className="text-small" />}
+                    variant="flat"
+                  >
+                    {t("transaction.Type")}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  disallowEmptySelection
+                  closeOnSelect={false}
+                  selectedKeys={typeFilter}
+                  selectionMode="multiple"
+                  onSelectionChange={setTypeFilter}
                 >
-                  {t("transaction.Type")}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                closeOnSelect={false}
-                selectedKeys={typeFilter}
-                selectionMode="multiple"
-                onSelectionChange={setTypeFilter}
-              >
-                {typeOptions.map((type) => (
-                  <DropdownItem key={type.uid} className="capitalize">
-                    {t(`transaction.${helper.capitalize(type.name)}`)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
+                  {typeOptions.map((type) => (
+                    <DropdownItem key={type.uid} className="capitalize">
+                      {t(`transaction.${helper.capitalize(type.name)}`)}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+              <Dropdown>
+                <DropdownTrigger className="flex">
+                  <Button
+                    endContent={<ChevronDownIcon className="text-small" />}
+                    variant="flat"
+                  >
+                    {t("transaction.Category")}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu
+                  disallowEmptySelection
+                  closeOnSelect={false}
+                  selectedKeys={categoryFilter}
+                  selectionMode="multiple"
+                  onSelectionChange={setCategoryFilter}
                 >
-                  {t("transaction.Category")}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                closeOnSelect={false}
-                selectedKeys={categoryFilter}
-                selectionMode="multiple"
-                onSelectionChange={setCategoryFilter}
-              >
-                {categories.map((category) => (
-                  <DropdownItem key={category.value} className="capitalize">
-                    <div className="flex items-center gap-2">
-                      <img width={15} src={helper.getImgUrl(category.src)} />
-                      <span>{t(`popup.${category.value}`)}</span>
-                    </div>
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+                  {categories.map((category) => (
+                    <DropdownItem key={category.value} className="capitalize">
+                      <div className="flex items-center gap-2">
+                        <img width={15} src={helper.getImgUrl(category.src)} />
+                        <span>{t(`popup.${category.value}`)}</span>
+                      </div>
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+            </div>
             <div className="flex items-center gap-3 mobile:max-w-[215px] w-[60vw] mobile:w-full max-[380px]:w-full justify-between">
               <label>{t("transaction.From")}:</label>
               <DatePicker

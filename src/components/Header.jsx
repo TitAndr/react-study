@@ -40,16 +40,22 @@ const Header = () => {
             <DarkMode />
           </NavbarItem>
           <NavbarItem>
-            <Avatar
-              onClick={() => navigate("/profile")}
-              isBordered
-              as="button"
-              color="success"
-              size="sm"
-              src={
-                user?.photo || helper.getImgUrl(`${user?.gender || "male"}.png`)
-              }
-            />
+            {user ? (
+              <Avatar
+                onClick={() => navigate("/profile")}
+                isBordered
+                showFallback
+                as="button"
+                color="success"
+                size="sm"
+                src={
+                  user?.photo ||
+                  helper.getImgUrl(`${user?.gender || "male"}.png`)
+                }
+              />
+            ) : (
+              <></>
+            )}
           </NavbarItem>
         </NavbarContent>
 

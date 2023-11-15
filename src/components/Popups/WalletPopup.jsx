@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Checkbox, Select, SelectItem, useDisclosure } from "@nextui-org/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BasePopup from "./BasePopup";
 import { GlobalContext } from "../../context/GlobalState";
 import helper from "../../utils/helper";
@@ -12,10 +12,15 @@ import CustomInput from "../CustomInput";
 
 const useWalletPopup = () => {
   const { t } = useTranslation();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen,
+    onOpen,
+    onOpenChange,
+    onClose: onCloseMain,
+  } = useDisclosure();
 
   const WalletPopup = ({ wallet, title }) => {
-    const { handleField, getError, isValid } = Validation();
+    const { handleField, getError, isValid, hideMessages } = Validation();
     const { wallets, currencies, saveWallet, currentWallet, setCurrentWallet } =
       useContext(GlobalContext);
     const [selectedWallet, setSelectedWallet] = useState(
@@ -41,13 +46,13 @@ const useWalletPopup = () => {
     const getExistMain = () =>
       wallets.find((c) => c.is_main && c.id !== selectedWallet.id);
 
-    const onCallback = (type, onClose) => {
+    const onCallback = (type, onClose, isConfirm) => {
       if (type === "save") {
         if (!isValid(setSelectedWallet)) {
           return;
         }
 
-        if (selectedWallet.is_main && getExistMain()) {
+        if (!isConfirm && selectedWallet.is_main && getExistMain()) {
           openConfirm();
           return;
         }
@@ -66,8 +71,12 @@ const useWalletPopup = () => {
         oldEntity: wallet,
       });
 
-      onClose();
+      onClose ? onClose() : onCloseMain();
     };
+
+    useEffect(() => {
+      hideMessages();
+    }, []);
 
     return (
       <>
@@ -141,22 +150,16 @@ const useWalletPopup = () => {
         <ConfirmPopup
           title={t("wallet.ConfirmTitle")}
           message={t("wallet.ConfirmText")}
-          callback={(onClose) => {
+          callback={() => {
             // uncheck primary from existing card
             helper.save("save", saveWallet, {
               newEntity: { ...getExistMain(), is_main: false },
               oldEntity: getExistMain(),
             });
 
-            // save new primary card
-            helper.save("save", saveWallet, {
-              newEntity: selectedWallet,
-              oldEntity: wallet,
-            });
-
             setCurrentWallet(selectedWallet);
 
-            onClose();
+            onCallback("save", null, true);
           }}
         />
       </>

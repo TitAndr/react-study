@@ -25,7 +25,7 @@ const Home = () => {
           <PaymentAction type="income" label={t("home.RequestPayment")} />
         </div>
       </div>
-      <div className="grid place-content-center place-items-center tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-4">
+      <div className="w-full grid place-content-start justify-center place-items-center tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-4">
         {purposes.map((p) => (
           <Purpose key={p.id} purpose={p} />
         ))}

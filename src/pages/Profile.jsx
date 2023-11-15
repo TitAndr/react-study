@@ -10,7 +10,15 @@ import CustomInput from "../components/CustomInput";
 const Profile = () => {
   const { t } = useTranslation();
   const { user, saveUser, updateAuth } = useContext(GlobalContext);
-  const [currentUser, setCurrentUser] = useState(user || {});
+  const [currentUser, setCurrentUser] = useState(
+    () =>
+      user || {
+        name: "",
+        email: "",
+        gender: "male",
+        photo: "",
+      }
+  );
   const [gender, setGender] = useState(user?.gender || "male");
   const [password, setPassword] = useState({
     new: "",
@@ -37,12 +45,19 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    setCurrentUser(user || {});
+    setCurrentUser(
+      user || {
+        name: "",
+        email: "",
+        gender: "male",
+        photo: "",
+      }
+    );
     setGender(user?.gender);
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center justify-around h-[65vh] gap-6 min-h-[740px] mobile:max-h-[600px] mobile:min-h-[480px]">
+    <div className="flex flex-col items-center justify-around h-[65vh] gap-6 min-h-[740px] mobile:min-h-[480px]">
       {user ? (
         <CustomAvatar
           image={user?.photo}

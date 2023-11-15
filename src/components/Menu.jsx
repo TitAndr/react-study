@@ -137,7 +137,7 @@ const Menu = ({ mobile, menuChange }) => {
         <NavbarMenu className="menu py-5 justify-start bg-[#080325]">
           <NavbarMenuItem className="menu--item flex flex-col items-center">
             <div className="flex flex-col justify-center items-center mb-5">
-              <div className="flex justify-between w-full pb-3">
+              <div className="flex justify-between w-[90vw] pb-3">
                 <LanguageSwitch />
                 <DarkMode mobile={true} />
               </div>

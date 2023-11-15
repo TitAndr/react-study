@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import helper from "../../utils/helper";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import BasePopup from "./BasePopup";
 import Validation from "../../utils/validation";
@@ -12,7 +12,7 @@ import CustomInput from "../CustomInput";
 const usePaymentPopup = () => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { handleField, getError, isValid } = Validation();
+  const { handleField, getError, isValid, hideMessages } = Validation();
 
   const PaymentPopup = ({ type, title }) => {
     const {
@@ -99,15 +99,18 @@ const usePaymentPopup = () => {
     const getFooterContent = (onClose) => {
       return (
         <Button
-          radius="full"
           color="success"
-          className="w-full font-bold text-white text-medium my-1"
+          className="w-full font-bold text-white text-medium my-3"
           onPress={() => onCallback(onClose)}
         >
-          {t("popup.MakePayment")}
+          {t("popup.MakePayment").toUpperCase()}
         </Button>
       );
     };
+
+    useEffect(() => {
+      hideMessages();
+    }, []);
 
     return (
       <BasePopup
@@ -125,7 +128,6 @@ const usePaymentPopup = () => {
           <CustomInput
             isRequired
             label={t("popup.Amount")}
-            type="number"
             size="lg"
             min={0}
             max={currentWallet?.balance}

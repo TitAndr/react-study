@@ -67,7 +67,7 @@ const MainLayout = ({ session, children }) => {
         <Header />
         <div className="content mx-[28px] pt-[60px] mobile:px-[20px] w-max-[1075px]">
           <div className="mt-[15px] mb-[25px]">
-            <h1 className="m-none text-title font-bold">{getTitles.title}</h1>
+            <h1 className="m-none text-title font-bold max-[550px]:text-[2rem]">{getTitles.title}</h1>
             {getTitles.subtitle ? (
               <h3 className="m-none text-[#5B6776]">{getTitles.subtitle}</h3>
             ) : (

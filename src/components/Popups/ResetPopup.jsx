@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Button, useDisclosure } from "@nextui-org/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalState";
 import BasePopup from "./BasePopup";
 import Validation from "../../utils/validation";
@@ -17,7 +18,7 @@ const useResetPopup = () => {
       useContext(GlobalContext);
     const [newPassword, setNewPassword] = useState("");
     const [email, setEmail] = useState("");
-    const { handleField, getError, isValid } = Validation();
+    const { handleField, getError, isValid, hideMessages } = Validation();
 
     const onResetClick = async (onClose) => {
       if (!isValid()) {
@@ -62,6 +63,10 @@ const useResetPopup = () => {
         </Button>
       );
     };
+
+    useEffect(() => {
+      hideMessages();
+    }, []);
 
     return (
       <BasePopup

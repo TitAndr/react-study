@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Avatar, Button } from "@nextui-org/react";
 import helper from "../utils/helper";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 const CustomAvatar = ({
   forPopup,
@@ -35,6 +36,7 @@ const CustomAvatar = ({
     >
       <Avatar
         isBordered
+        showFallback
         color={!forPopup ? "success" : ""}
         className={`${!forPopup ? "w-[150px] h-[150px]" : "w-[90px] h-[90px]"}`}
         src={photo || helper.getImgUrl(fallbackImg)}
@@ -83,4 +85,4 @@ const CustomAvatar = ({
   );
 };
 
-export default CustomAvatar;
+export default memo(CustomAvatar);

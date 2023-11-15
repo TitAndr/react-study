@@ -17,7 +17,7 @@ const useConfirmPopup = () => {
   const ConfirmPopup = ({ title, message, callback }) => {
     const { t } = useTranslation();
     const onCallback = (onClose) => {
-      callback ? callback(onClose) : null;
+      callback ? callback() : null;
       onClose();
     };
 

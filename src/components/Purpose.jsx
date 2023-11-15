@@ -30,7 +30,7 @@ const Purpose = ({ purpose }) => {
     <>
       {purpose ? (
         <Card
-          className="w-[90vw] tablet:max-w-[280px] tablet:w-full"
+          className="w-[80vw] tablet:max-w-[280px] tablet:w-full min-h-[155px]"
           isPressable
           onPress={onOpen}
         >
@@ -82,7 +82,9 @@ const Purpose = ({ purpose }) => {
         </Card>
       ) : (
         <CreateButton
-          classes={"h-full min-w-[220px]"}
+          classes={
+            "h-full w-[80vw] tablet:max-w-[280px] tablet:w-full min-w-[220px] min-h-[155px]"
+          }
           label={t("purpose.CreatePurpose")}
           onOpen={onOpen}
         />

@@ -331,14 +331,16 @@ body {
 }
 
 @media (max-height: 730px) {
-    .menu--item > button {
+    .menu--item>button {
         margin-bottom: 0;
         margin-top: 0;
     }
-    .menu--item > div {
+
+    .menu--item>div {
         margin-bottom: .5rem;
     }
+
     .menu--item-logout {
-        margin-top: 20px;
+        margin-top: 35px;
     }
 }

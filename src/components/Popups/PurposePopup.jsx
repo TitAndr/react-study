@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useDisclosure } from "@nextui-org/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BasePopup from "./BasePopup";
 import { GlobalContext } from "../../context/GlobalState";
 import helper from "../../utils/helper";
@@ -15,7 +15,7 @@ const usePurposePopup = () => {
 
   const PurposePopup = ({ purpose, title }) => {
     const { t } = useTranslation();
-    const { handleField, getError, isValid } = Validation();
+    const { handleField, getError, isValid, hideMessages } = Validation();
     const { currentWallet, savePurpose, purposes } = useContext(GlobalContext);
     const [selectedPurpose, setSelectedPurpose] = useState(
       () =>
@@ -47,6 +47,10 @@ const usePurposePopup = () => {
 
       onClose();
     };
+
+    useEffect(() => {
+      hideMessages();
+    }, []);
 
     return (
       <BasePopup
@@ -83,7 +87,6 @@ const usePurposePopup = () => {
           <CustomInput
             isRequired
             label={t("popup.Amount")}
-            type="number"
             min={0}
             value={selectedPurpose.amount}
             errorMessage={getError(
