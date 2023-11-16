@@ -103,6 +103,7 @@ export default {
     },
     wallet: {
       EditWallet: "编辑钱包",
+      MainWallet: "主钱包",
       EditCurrentWallet: "编辑当前钱包",
       TotalBalance: "总余额",
       SelectCurrency: "选择货币",

@@ -68,18 +68,18 @@ const Purpose = ({ purpose }) => {
           <CardBody className="px-5 py-3">
             <Progress
               label={
-                <p className="max-w-[100px]">
+                <p className="max-w-[100px] whitespace-nowrap">
                   <span className="text-1rem text-yellow-500">
                     {currentWallet.currency}
-                    {currentAmount <= purpose.amount
+                    {helper.getFormatBalance(currentAmount <= purpose.amount
                       ? currentAmount
-                      : purpose.amount}{" "}
+                      : purpose.amount)}{" "}
                   </span>
                   /
                   <span className="text-yellow-200 text-[.8rem]">
                     {" "}
                     {currentWallet.currency}
-                    {purpose.amount}{" "}
+                    {helper.getFormatBalance(purpose?.amount)}{" "}
                   </span>
                 </p>
               }
@@ -95,7 +95,7 @@ const Purpose = ({ purpose }) => {
                     : "bg-gradient-to-r from-pink-500 to-yellow-500"
                 }`,
                 label: "tracking-wider font-medium text-default-600",
-                value: "text-foreground/80",
+                value: "text-foreground/80 font-bold",
               }}
             />
           </CardBody>
@@ -107,6 +107,7 @@ const Purpose = ({ purpose }) => {
           }
           label={t("purpose.CreatePurpose")}
           onOpen={onOpen}
+          btnImage={helper.getImgUrl("purpose.png")}
         />
       )}
       <PurposePopup purpose={purpose} title="Edit purpose" />

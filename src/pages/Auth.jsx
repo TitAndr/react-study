@@ -232,6 +232,7 @@ const Auth = ({ openReset }) => {
           <CustomAvatar
             image={helper.getImgUrl(`${loginInfo?.gender || "male"}.png`)}
             withoutEdit
+            withoutShowFallback
             forPopup
           />
           <h1 className="font-bold m-none text-[2rem] px-2 text-center">

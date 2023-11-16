@@ -42,17 +42,21 @@ const incomeOutComeList = [
 
 const FinanceChart = () => {
   const { t } = useTranslation();
-  const { total_infos, setTotalInfos, transactions } =
+  const { total_infos, setTotalInfos, transactions, currentWallet } =
     useContext(GlobalContext);
-  const [historicalData, setHistoricalData] = useState([11]);
+  const [historicalData, setHistoricalData] = useState([]);
   const [chartType, setChartType] = useState(incomeOutComeList[0].key);
   const [chartDay, setChartDay] = useState(chartDays[0]);
+
+  const currentTransactions = transactions.filter(
+    (t) => Number(t.wallet_id) === Number(currentWallet?.id)
+  );
 
   const filteredData = () => {
     if (chartType === "combined") {
       setHistoricalData({
         income: helper.getDataByDateRange(
-          transactions
+          currentTransactions
             .filter((t) => t.type === "income")
             .map((v) => ({ created_at: v.created_at, amount: v.amount })),
           "created_at",
@@ -60,7 +64,7 @@ const FinanceChart = () => {
         ),
 
         outcome: helper.getDataByDateRange(
-          transactions
+          currentTransactions
             .filter((t) => t.type === "outcome")
             .map((v) => ({ created_at: v.created_at, amount: v.amount })),
           "created_at",
@@ -68,7 +72,7 @@ const FinanceChart = () => {
         ),
 
         created_at: helper.getDataByDateRange(
-          transactions.map((t) => ({ created_at: t.created_at })),
+          currentTransactions.map((t) => ({ created_at: t.created_at })),
           "created_at",
           chartDay.value
         ),
@@ -76,7 +80,7 @@ const FinanceChart = () => {
     } else {
       setHistoricalData(
         helper.getDataByDateRange(
-          transactions
+          currentTransactions
             .filter((t) => t.type === chartType)
             .map((v) => ({ created_at: v.created_at, amount: v.amount })),
           "created_at",
@@ -94,7 +98,7 @@ const FinanceChart = () => {
     setIncomeOutComeList({ currentKey: "income" });
     filteredData();
     setTotalInfos();
-  }, [transactions]);
+  }, [currentTransactions]);
 
   useEffect(() => {
     filteredData();
@@ -102,7 +106,7 @@ const FinanceChart = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      {transactions.length !== 0 ? (
+      {currentTransactions.length !== 0 ? (
         <>
           <div className="flex justify-end items-center w-full m-0 mb-1">
             <div className="flex items-center gap-4">

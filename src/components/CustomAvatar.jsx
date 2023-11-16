@@ -12,6 +12,7 @@ const CustomAvatar = ({
   imgCallback,
   fallbackImg,
   withoutEdit,
+  withoutShowFallback,
 }) => {
   const { setNotification } = useContext(GlobalContext);
   const [photo, setPhoto] = useState(image || null);
@@ -48,7 +49,7 @@ const CustomAvatar = ({
     >
       <Avatar
         isBordered
-        showFallback
+        showFallback={!withoutShowFallback}
         color={!forPopup ? "success" : ""}
         className={`${!forPopup ? "w-[150px] h-[150px]" : "w-[90px] h-[90px]"}`}
         src={photo || fallbackImg}

@@ -109,6 +109,7 @@ export default {
     },
     wallet: {
       EditWallet: "Modifier le portefeuille",
+      MainWallet: "Portefeuille principal",
       EditCurrentWallet: "Modifier le portefeuille actuel",
       TotalBalance: "Solde total",
       SelectCurrency: "Sélectionnez une devise",

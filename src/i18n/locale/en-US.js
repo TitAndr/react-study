@@ -107,6 +107,7 @@ export default {
     },
     wallet: {
       EditWallet: "Edit wallet",
+      MainWallet: "Main wallet",
       EditCurrentWallet: "Edit current wallet",
       TotalBalance: "Total balance",
       SelectCurrency: "Select a currency",

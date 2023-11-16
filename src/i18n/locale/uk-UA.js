@@ -102,11 +102,12 @@ export default {
       Save: "Зберегти",
     },
     purpose: {
-      CreatePurpose: "Створення мети",
+      CreatePurpose: "Створити мету",
       LastPaid: "Останній платіж",
     },
     wallet: {
       EditWallet: "Редагувати гаманець",
+      MainWallet: "Основний гаманець",
       EditCurrentWallet: "Редагувати поточний гаманець",
       TotalBalance: "Загальний баланс",
       SelectCurrency: "Виберіть валюту",

@@ -34,16 +34,16 @@ const Balance = ({ walletList }) => {
 
   return (
     <>
-      <Card className="desktop:max-w-[480px] mobile:w-full mobile:min-w-[330px]">
-        <CardHeader className="flex gap-3 relative">
-          <h1 className="font-bold m-none text-[1.8rem] px-2">
+      <Card className="min-h-[200px] desktop:max-w-[480px] mobile:w-full mobile:min-w-[330px] desktop:min-h-0">
+        <CardHeader className="flex gap-3 justify-between items-center">
+          <h1 className="font-bold m-none text-[1.8rem] px-2 text-ellipsis overflow-hidden w-[95%] whitespace-nowrap">
             {currentWallet.name}
           </h1>
           {walletList.length > 1 ? (
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <img
-                  className="absolute top-2 right-3 cursor-pointer"
+                  className="cursor-pointer mr-2"
                   width={30}
                   src={helper.getImgUrl("change.png")}
                   alt="settings"
@@ -57,7 +57,7 @@ const Balance = ({ walletList }) => {
                 {walletList
                   .filter((c) => c.id !== currentWallet.id)
                   .map((w) => (
-                    <DropdownItem key={w.id} className="font-semibold">
+                    <DropdownItem key={w.id} className="font-semibold max-w-[170px]">
                       {w.name}
                     </DropdownItem>
                   ))}
@@ -75,20 +75,27 @@ const Balance = ({ walletList }) => {
             </Dropdown>
           ) : (
             <img
-              className="absolute top-2 right-3 cursor-pointer"
-              width={30}
+              className="cursor-pointer mr-2"
+              width={20}
               src={helper.getImgUrl("edit.png")}
               alt="settings"
               onClick={onOpen}
             />
           )}
         </CardHeader>
-        <CardBody className="py-0 px-[1.25rem]">
+        <CardBody className="py-0 px-[1.25rem] justify-center">
+          {currentWallet?.is_main ? (
+            <span className="font-bold p-1 text-center uppercase text-red-500 border-solid border-3 rounded-large border-red-500 mobile:p-2 w-fit max-w-[215px]">
+              {t("wallet.MainWallet")}
+            </span>
+          ) : (
+            <></>
+          )}
           <div className="flex justify-between items-center">
             <span className="text-[1.3rem]">{t("wallet.TotalBalance")}:</span>
             <span className="text-[3rem] font-bold min-[430px]:text-[4rem]">
               {currentWallet.currency}
-              {currentWallet.balance}
+              {helper.getFormatBalance(currentWallet?.balance)}
             </span>
           </div>
         </CardBody>

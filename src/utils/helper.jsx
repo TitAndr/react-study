@@ -155,4 +155,36 @@ export default {
     }
     return result;
   },
+  getFormatBalance(amount) {
+    if (!amount) {
+      return "";
+    }
+
+    const formatter = Intl.NumberFormat("en", { notation: "compact" });
+    const balance = formatter.format(Number(amount));
+
+    if (balance[balance.length - 1] === "K") {
+      return (
+        <>
+          <b>
+            {Number(amount) > 100000
+              ? (Number(amount) / 1000).toFixed(1)
+              : Number(amount)}
+          </b>
+          <b className="text-danger">
+            {Number(amount) > 100000 ? "K" : ""}
+          </b>
+        </>
+      );
+    }
+
+    const notation = balance[balance.length - 1];
+
+    return (
+      <>
+        <b>{balance.slice(0, balance.length - 1)}</b>
+        <b className="text-danger">{notation}</b>
+      </>
+    );
+  }
 };

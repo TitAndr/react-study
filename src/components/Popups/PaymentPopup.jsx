@@ -13,7 +13,7 @@ import CustomInput from "../CustomInput";
 const usePaymentPopup = () => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { handleField, getError, isValid, hideMessages } = Validation();
+  const { handleField, getError, isValid, hideMessages, purgeFields } = Validation();
 
   const PaymentPopup = ({ type, title }) => {
     const {
@@ -121,12 +121,15 @@ const usePaymentPopup = () => {
     }, []);
 
     useEffect(() => {
-      setTransaction((t) => ({
-        ...t,
-        category: selectedPurpose
+      handleField(
+        "category",
+        selectedPurpose
           ? categories.find((c) => c.value === "Other").value
           : "",
-      }));
+        setTransaction
+      );
+      hideMessages();
+      purgeFields();
     }, [selectedPurpose]);
 
     return (

@@ -4,7 +4,7 @@ import helper from "../utils/helper";
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
-const CreateButton = ({ label, classes, onOpen }) => {
+const CreateButton = ({ label, classes, onOpen, btnImage }) => {
   const { darkMode } = useContext(GlobalContext);
   return (
     <>
@@ -13,13 +13,17 @@ const CreateButton = ({ label, classes, onOpen }) => {
         isPressable
         onPress={onOpen}
       >
-        <CardBody className={`items-center ${!darkMode ? "bg-[#F7F8FD]" : ""} justify-center`}>
+        <CardBody
+          className={`items-center ${
+            !darkMode ? "bg-[#F7F8FD]" : ""
+          } justify-center`}
+        >
           <img
             alt="d"
             width={50}
             height={50}
             className="object-cover"
-            src={helper.getImgUrl("wallet-btn.svg")}
+            src={btnImage || helper.getImgUrl("wallet-btn.svg")}
           />
           <p className="font-bold pt-3 text-[#4F46E5]">{label}</p>
         </CardBody>

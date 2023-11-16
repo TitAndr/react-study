@@ -23,7 +23,7 @@ const PaymentAction = ({ label, type, disable }) => {
   return (
     <>
       <Card
-        className="w-[85%] mobile:w-full desktop:max-w-[230px] desktop:min-w-[200px]"
+        className="w-[85%] max-[490px]:w-[40vw] mobile:w-[50vw] desktop:max-w-[230px] desktop:min-w-[200px]"
         shadow="sm"
         isPressable
         onClick={openPayment}
@@ -33,12 +33,12 @@ const PaymentAction = ({ label, type, disable }) => {
             alt="d"
             width={100}
             height={100}
-            className="object-cover"
+            className="object-cover max-[490px]:w-[60px]"
             src={helper.getImgUrl(
               `${type === "income" ? "request" : "send"}-payment.svg`
             )}
           />
-          <span className="font-bold pt-3 text-center">{label}</span>
+          <span className="font-bold whitespace-nowrap pt-3 text-center max-[490px]:text-[.8rem] max-[345px]:whitespace-break-spaces">{label}</span>
         </CardBody>
       </Card>
       <PaymentPopup
