@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { GlobalContext } from "../context/GlobalState";
 import useWalletPopup from "../components/Popups/WalletPopup";
+import helper from "../utils/helper";
 
 const Home = () => {
   const { purposes, wallets, currentWallet } = useContext(GlobalContext);
@@ -26,9 +27,15 @@ const Home = () => {
         </div>
       </div>
       <div className="w-full grid place-content-start justify-center place-items-center tablet:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-4">
-        {purposes.map((p) => (
-          <Purpose key={p.id} purpose={p} />
-        ))}
+        {helper
+          .sortBy(purposes, null, (purpose) => {
+            return purpose
+              ? !!purpose.amount && purpose.amount <= purpose.current_amount
+              : false;
+          })
+          .map((p) => (
+            <Purpose key={p.id} purpose={p} />
+          ))}
         <Purpose />
       </div>
       <CreateButton label={t("home.CreateNewWallet")} onOpen={onOpen} />

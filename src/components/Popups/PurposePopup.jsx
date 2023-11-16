@@ -40,6 +40,11 @@ const usePurposePopup = () => {
         return;
       }
 
+      selectedPurpose.photo =
+        typeof selectedPurpose.photo === "string"
+          ? selectedPurpose.photo
+          : null;
+
       helper.save(type, savePurpose, {
         newEntity: selectedPurpose,
         oldEntity: purpose,

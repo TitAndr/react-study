@@ -61,8 +61,10 @@ export default {
       newEntity = oldEntity;
     }
   },
-  sortBy(array, key) {
-    return array.sort((a, b) => Number(b[key]) - Number(a[key]));
+  sortBy(array, key, cb) {
+    return cb
+      ? array.sort((a) => (cb(a) ? 1 : -1))
+      : array.sort((a, b) => Number(b[key]) - Number(a[key]));
   },
   timeSince(date) {
     const { t } = useTranslation();

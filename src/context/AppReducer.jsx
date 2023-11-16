@@ -146,7 +146,10 @@ const AppReducer = (state, action) => {
       return initState("purposes", state, action);
 
     case SET_PURPOSE:
-      return setState("purposes", state, action);
+      return {
+        ...state,
+        purposes: [action.payload, ...state.purposes],
+      };
 
     case UPDATE_PURPOSE:
       return {

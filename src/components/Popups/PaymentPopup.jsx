@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { Button, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import helper from "../../utils/helper";
@@ -45,7 +46,7 @@ const usePaymentPopup = () => {
       // Check and update selected purpose balance
       if (selectedPurpose) {
         const existPurpose = purposes.find(
-          (p) => p.id === Number(selectedPurpose.currentKey)
+          (p) => p.id === Number(selectedPurpose)
         );
 
         const purposeAmount =
@@ -119,6 +120,15 @@ const usePaymentPopup = () => {
       hideMessages();
     }, []);
 
+    useEffect(() => {
+      setTransaction((t) => ({
+        ...t,
+        category: selectedPurpose
+          ? categories.find((c) => c.value === "Other").value
+          : "",
+      }));
+    }, [selectedPurpose]);
+
     return (
       <BasePopup
         isOpen={isOpen}
@@ -173,7 +183,8 @@ const usePaymentPopup = () => {
               <Select
                 label={t("popup.SelectPurpose")}
                 className="max-w-xs"
-                onSelectionChange={setPurpose}
+                selectedKeys={[selectedPurpose || ""]}
+                onSelectionChange={({ currentKey }) => setPurpose(currentKey)}
               >
                 {getPurposes().map((purpose) => (
                   <SelectItem
@@ -195,7 +206,11 @@ const usePaymentPopup = () => {
           ) : (
             <></>
           )}
-          <div className="flex gap-3 max-[400px]:flex-col">
+          <div
+            className={`flex gap-3 ${
+              selectedPurpose ? "justify-center" : ""
+            } max-[400px]:flex-col`}
+          >
             <CustomSelect
               label={t("popup.PaymentType")}
               list={paymentTypes}
@@ -214,19 +229,23 @@ const usePaymentPopup = () => {
                   : []
               }
             />
-            <CustomSelect
-              label={t("popup.Category")}
-              value={[selectedTransaction.category]}
-              list={categories.filter((c) => c.type === type)}
-              errorMessage={getError(
-                "category",
-                selectedTransaction,
-                "required"
-              )}
-              onSelectionChange={(value) => {
-                handleField("category", value, setTransaction);
-              }}
-            />
+            {!selectedPurpose ? (
+              <CustomSelect
+                label={t("popup.Category")}
+                value={[selectedTransaction.category]}
+                list={categories.filter((c) => c.type === type)}
+                errorMessage={
+                  !selectedPurpose
+                    ? getError("category", selectedTransaction, "required")
+                    : null
+                }
+                onSelectionChange={(value) => {
+                  handleField("category", value, setTransaction);
+                }}
+              />
+            ) : (
+              <></>
+            )}
           </div>
           <CustomInput
             isRequired
