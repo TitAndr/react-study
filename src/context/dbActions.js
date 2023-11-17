@@ -33,7 +33,7 @@ export const dbUpdates = async (
       notification.params = { entity: table.toUpperCase() };
     }
 
-    const { data, error } = await request;
+    const { error } = await request;
 
     if (error) {
       afterCallback({ type: "error", message: error?.message || error });
@@ -43,7 +43,6 @@ export const dbUpdates = async (
     if (notification.message) {
       afterCallback(notification);
     }
-    return data;
   } catch (error) {
     afterCallback({ type: "error", message: error?.message || error });
   }

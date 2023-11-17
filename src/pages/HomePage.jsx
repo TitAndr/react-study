@@ -14,7 +14,7 @@ const Home = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-col justify-between gap-4 desktop:flex-row">
         <Balance walletList={wallets} />
         <div className="flex justify-between items-center gap-6 min-w-[35vw]">
