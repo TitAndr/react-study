@@ -2,6 +2,45 @@
 import { supabase } from "../supabase";
 import helper from "../utils/helper";
 
+export const getInitData = async (userId, errorCalback) => {
+  try {
+    const result = await Promise.all([
+      supabase.from("wallet").select("*").eq("user_id", userId),
+      supabase.from("card").select("*").eq("user_id", userId),
+      supabase.from("purpose").select("*").eq("user_id", userId),
+      supabase.from("transaction").select("*").eq("user_id", userId),
+      supabase.from("userInfo").select("*").eq("user_id", userId),
+    ]);
+
+    const [
+      { data: wallets, error: errorWallet },
+      { data: cards, error: errorCard },
+      { data: purposes, error: errorPurpose },
+      { data: transactions, error: errorTransaction },
+      { data: userInfo, error: errorUserInfo },
+    ] = result;
+
+    if (
+      !errorCard &&
+      !errorWallet &&
+      !errorPurpose &&
+      !errorTransaction &&
+      !errorUserInfo
+    ) {
+      return {
+        userInfo,
+        wallets,
+        cards,
+        purposes,
+        transactions,
+      };
+    }
+  } catch (error) {
+    const err = { type: "error", message: error?.message || error };
+    errorCalback ? errorCalback(err) : console.log(err);
+  }
+};
+
 export const dbUpdates = async (
   table,
   action,

@@ -20,7 +20,7 @@ import {
   SWITCH_THEME,
 } from "./ActionTypes";
 import { supabase } from "../supabase/index";
-import { dbUpdates, setChannel } from "./dbActions";
+import { dbUpdates, getInitData, setChannel } from "./dbActions";
 import i18n from "../i18n/index";
 
 const languagesList = [
@@ -246,49 +246,28 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const getData = async (userId) => {
-    try {
-      setLoading(true);
-      const result = await Promise.all([
-        supabase.from("wallet").select("*").eq("user_id", userId),
-        supabase.from("card").select("*").eq("user_id", userId),
-        supabase.from("purpose").select("*").eq("user_id", userId),
-        supabase.from("transaction").select("*").eq("user_id", userId),
-        supabase.from("userInfo").select("*").eq("user_id", userId),
-      ]);
+    setLoading(true);
+    const result = await getInitData(userId, setNotification);
 
-      const [
-        { data: wallets, error: errorWallet },
-        { data: cards, error: errorCard },
-        { data: purposes, error: errorPurpose },
-        { data: transactions, error: errorTransaction },
-        { data: userInfo, error: errorUserInfo },
-      ] = result;
-
-      if (
-        !errorCard &&
-        !errorWallet &&
-        !errorPurpose &&
-        !errorTransaction &&
-        !errorUserInfo
-      ) {
-        setAllUserInfo(userInfo[0]);
-        setAllWallets(wallets);
-        setAllCards(cards);
-        setAllPurposes(purposes);
-        setAllTransactions(transactions);
-        setTotalInfos();
-
-        setPaymentTypes(cards.length === 0 ? [paymentTypes[0]] : paymentTypes);
-
-        if (wallets[0]) {
-          setCurrentWallet(wallets.find((w) => w.is_main) || wallets[0]);
-        }
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-      setNotification({ type: "error", message: error?.message || error });
+    if (!result) {
+      return;
     }
+
+    const { userInfo, wallets, cards, purposes, transactions } = result;
+
+    setAllUserInfo(userInfo[0]);
+    setAllWallets(wallets);
+    setAllCards(cards);
+    setAllPurposes(purposes);
+    setAllTransactions(transactions);
+    setTotalInfos();
+
+    setPaymentTypes(cards.length === 0 ? [paymentTypes[0]] : paymentTypes);
+
+    if (wallets[0]) {
+      setCurrentWallet(wallets.find((w) => w.is_main) || wallets[0]);
+    }
+    setLoading(false);
   };
 
   // ------------------------------------- Init Render ----------------------------------------------
@@ -319,8 +298,10 @@ export const GlobalProvider = ({ children }) => {
   }, [state.user]);
 
   useEffect(() => {
-    setPaymentTypes(state.cards.length === 0 ? [paymentTypes[0]] : paymentTypes);
-  }, [state.cards])
+    setPaymentTypes(
+      state.cards.length === 0 ? [paymentTypes[0]] : paymentTypes
+    );
+  }, [state.cards]);
 
   return (
     <GlobalContext.Provider
